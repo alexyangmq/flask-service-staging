@@ -16,15 +16,8 @@ def lambda_handler(event, context):
         logger.info(f'User parameters: {user_parameters}')
         url = event['CodePipeline.job']['data']['actionConfiguration']['configuration']['UserParameters']
         response = requests.get(url)
-        print(response)
-        logger.info(f'codepipeline.put_job_failure_result: {job_id}')
-        response = codepipeline.put_job_failure_result(
-            jobId=job_id,
-            failureDetails={
-                'type': 'JobFailed',
-                'message': f'mock'
-            }
-        )
+        logger.info(response)
+        response = codepipeline.put_job_success_result(jobId=job_id)
         logger.debug(response)
     except Exception as error:
         logger.exception(error)
